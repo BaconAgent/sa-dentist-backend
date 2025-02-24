@@ -1,7 +1,65 @@
-   - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+name: sa-dentist-backend
+on:
+  push:
+      branches:
+      - dev
+      paths:
+      - sa-dentist-backend/**
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  sonarqubeScan1:
+    name: SonarQubeScan1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectBaseDir: sa-dentist-backend_API-gateway
+          projectBaseDir: sa-dentist-backend/API-gateway
+          
+  sonarqubeScan2:
+    name: SonarQubeScan2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env: 
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: sa-dentist-backend/user-service
+          
+   sonarqubeScan3:
+     name: SonarQubeScan3
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v3
+         with:
+           fetch-depth: 0  
+       - name: SonarQube Scan
+         uses: SonarSource/sonarqube-scan-action@v4
+         env: 
+           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         with:
+           projectBaseDir: sa-dentist-backend/appointment-service
+
+   sonarqubeScan4:
+     name: SonarQubeScan4
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v3
+         with:
+           fetch-depth: 0  
+       - name: SonarQube Scan
+         uses: SonarSource/sonarqube-scan-action@v4
+         env: 
+           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         with:
+           projectBaseDir: sa-dentist-backend/clinic-service
