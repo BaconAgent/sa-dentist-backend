@@ -1,13 +1,12 @@
 name: sa-dentist-backend
 on:
   push:
-    branches:
+      branches:
       - dev
-    paths:
+      paths:
       - sa-dentist-backend/**
   pull_request:
     types: [opened, synchronize, reopened]
-
 jobs:
   sonarqubeScan1:
     name: SonarQubeScan1
