@@ -2,6 +2,7 @@ package com.dentists.microservices.clinic_service.controller;
 
 import com.dentists.microservices.clinic_service.dto.ClinicRequest;
 import com.dentists.microservices.clinic_service.dto.ClinicResponse;
+import com.dentists.microservices.clinic_service.publisher.RabbitMQProducer;
 import com.dentists.microservices.clinic_service.service.ClinicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClinicController {
     private final ClinicService clinicService;
+    private final RabbitMQProducer rabbitMQProducer;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,5 +43,10 @@ public class ClinicController {
     @ResponseStatus(HttpStatus.OK)
     public ClinicResponse updateClinic(@RequestBody ClinicRequest clinicRequest){
         return clinicService.updateClinic(clinicRequest);
+    }
+    @GetMapping("/publish")
+    public ResponseEntity<String> sendMessage(@RequestParam("message") String message){
+        rabbitMQProducer.sendMessage(message);
+        return ResponseEntity.ok("Message sent to RabbitMQ.");
     }
 }
