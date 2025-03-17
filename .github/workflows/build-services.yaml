@@ -1,0 +1,52 @@
+name: Build Changed Service
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository so we can inspect the changes
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Use dorny/paths-filter to detect changes in specific directories
+      - name: Filter changed paths
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            appointment-service:
+              - 'appointment-service/**'
+            clinic-service:
+              - 'clinic-service/**'
+            user-service:
+              - 'user-service/**'
+            API-gateway:
+              - 'API-gateway/**'
+
+      # Build Microservice 1 if there are changes
+      - name: Build appointment service
+        if: steps.filter.outputs.appointment-service == 'true'
+        working-directory: appointment-service
+        run: mvn clean install
+
+      # Build Microservice 2 if there are changes
+      - name: Build clinic service
+        if: steps.filter.outputs.clinic-service == 'true'
+        working-directory: clinic-service
+        run: mvn clean install
+
+      # Build Microservice 3 if there are changes
+      - name: Build user service
+        if: steps.filter.outputs.user-service == 'true'
+        working-directory: user-service
+        run: mvn clean install
+
+      # Build API Gateway if there are changes
+      - name: Build API Gateway
+        if: steps.filter.outputs.API-gateway == 'true'
+        working-directory: API-gateway
+        run: mvn clean install
