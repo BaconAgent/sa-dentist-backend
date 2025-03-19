@@ -68,7 +68,7 @@ jobs:
 
       # Build and push API Gateway image only if changes were detected.
       - name: Build and push API Gateway
-        if: steps.filter.outputs.API_gateway == 'true'
+        if: steps.filter.outputs.API-gateway == 'true'
         uses: docker/build-push-action@v4
         with:
           context: ./API-gateway
