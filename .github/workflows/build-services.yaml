@@ -59,7 +59,7 @@ jobs:
 
       - name: Docker compose build
         run: |
-            docker compose --profile all build
+            docker compose up
             mkdir dockerimages
             docker save baconagent/appointmentservice -o ./dockerimages/appointmentservice.tar
             docker save baconagent/clinicservice -o ./dockerimages/clinicservice.tar
@@ -101,7 +101,7 @@ jobs:
 
       - name: Run Docker Containers
         run: |
-          docker compose --profile all up -d
+          docker compose up
           docker ps
       - name : Test RabbitMQ request
         run: |
