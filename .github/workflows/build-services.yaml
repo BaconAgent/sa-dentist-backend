@@ -76,7 +76,7 @@ jobs:
         name: Checkout docker compose file
         with:
           sparse-checkout: |
-            docker-compose.yml
+            dockercompose.yml
           sparse-checkout-cone-mode: false
 
       - name: Create docker images folder
