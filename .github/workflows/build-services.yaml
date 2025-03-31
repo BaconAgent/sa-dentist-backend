@@ -4,6 +4,10 @@ on:
   push:
     branches: [dev]
 
+permissions:
+  packages: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -59,7 +63,7 @@ jobs:
 
       - name: Docker compose build
         run: |
-            docker compose up
+            docker compose -f dockercompose.yaml up -d
             mkdir dockerimages
             docker save baconagent/appointmentservice -o ./dockerimages/appointmentservice.tar
             docker save baconagent/clinicservice -o ./dockerimages/clinicservice.tar
