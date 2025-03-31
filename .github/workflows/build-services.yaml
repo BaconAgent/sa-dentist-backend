@@ -65,11 +65,11 @@ jobs:
         run: |
             docker compose -f dockercompose.yaml up -d
             mkdir dockerimages
-            docker save baconagent/appointmentservice -o ./dockerimages/appointmentservice.tar
-            docker save baconagent/clinicservice -o ./dockerimages/clinicservice.tar
-            docker save baconagent/api-gateway -o ./dockerimages/api-gateway.tar
-            docker save baconagent/postgres_appointmentsdb -o ./dockerimages/postgres_appointmentsdb.tar
-            docker save baconagent/rabbitmq -o ./dockerimages/rabbitmq.tar
+            docker save appointmentservice -o ./dockerimages/appointmentservice.tar
+            docker save clinicservice -o ./dockerimages/clinicservice.tar
+            docker save api-gateway -o ./dockerimages/api-gateway.tar
+            docker save postgres_appointmentsdb -o ./dockerimages/postgres_appointmentsdb.tar
+            docker save rabbitmq -o ./dockerimages/rabbitmq.tar
 
   test:
     runs-on: ubuntu-latest
