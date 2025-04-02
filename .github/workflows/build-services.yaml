@@ -65,11 +65,9 @@ jobs:
         run: |
             docker compose build
             mkdir dockerimages
-            docker save appointment-service -o ./dockerimages/appointment-service.tar
-            docker save clinic-service -o ./dockerimages/clinicservice.tar
-            docker save api-gateway -o ./dockerimages/api-gateway.tar
-            docker save postgres_appointmentsdb -o ./dockerimages/postgres_appointmentsdb.tar
-            docker save rabbitmq -o ./dockerimages/rabbitmq.tar
+            docker save baconagent/appointment-service -o ./dockerimages/appointment-service.tar
+            docker save baconagent/clinic-service -o ./dockerimages/clinicservice.tar
+            docker save baconagent/api-gateway -o ./dockerimages/api-gateway.tar
 
       - name: Upload Docker images as artifact
         uses: actions/upload-artifact@v4
@@ -102,8 +100,6 @@ jobs:
 
       - name: Load Docker Images
         run: |
-          docker load -i ./dockerimages/postgres_appointmentsdb
-          docker load -i ./dockerimages/rabbitmq
           docker load -i ./dockerimages/appointment-service
           docker load -i ./dockerimages/clinic-service
           docker load -i ./dockerimages/api-gateway
@@ -111,7 +107,7 @@ jobs:
 
       - name: Run Docker Containers
         run: |
-          docker compose up
+          docker compose up -d
           docker ps
       - name : Test RabbitMQ request
         run: |
