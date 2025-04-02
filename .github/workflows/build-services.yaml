@@ -117,6 +117,7 @@ jobs:
              -X PUT \
              -d '{"auto_delete": false, "durable": true, "arguments": {}}' \
              http://rabbitmq:15672/api/queues/%2f/delete_clinic_queue
+          sleep 10s
           curl 'http://localhost:8080/api/clinic/publish?message=test'
       - name: Validate Docker logs
         run: |
