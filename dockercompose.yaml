@@ -31,6 +31,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
  
 #   user-service:
+     #image: "baconagent/user-service"
 #     build:
 #       context: ./UserService
 #       dockerfile: Dockerfile
@@ -48,6 +49,7 @@ services:
 #       - "8082:8082"
  
   clinic-service:
+    image: "baconagent/clinic-service"
     build:
       context: ./clinic-service
       dockerfile: Dockerfile
@@ -65,6 +67,7 @@ services:
       - "8080:8080"
 
   appointment-service:
+    image: "baconagent/appointment-service"
     build:
       context: ./appointment-service
       dockerfile: Dockerfile
@@ -82,6 +85,7 @@ services:
       - "8081:8081"
 
   api-gateway:
+    image: "baconagent/api-gateway"
     build:
       context: ./API-gateway
       dockerfile: Dockerfile
