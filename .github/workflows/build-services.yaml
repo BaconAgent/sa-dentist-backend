@@ -65,11 +65,17 @@ jobs:
         run: |
             docker compose build
             mkdir dockerimages
-            docker save appointmentservice -o ./dockerimages/appointmentservice.tar
-            docker save clinicservice -o ./dockerimages/clinicservice.tar
+            docker save appointment-service -o ./dockerimages/appointmentservice.tar
+            docker save clinic-service -o ./dockerimages/clinicservice.tar
             docker save api-gateway -o ./dockerimages/api-gateway.tar
             docker save postgres_appointmentsdb -o ./dockerimages/postgres_appointmentsdb.tar
             docker save rabbitmq -o ./dockerimages/rabbitmq.tar
+
+      - name: Upload Docker images as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-images
+          path: ./dockerimages/
 
   test:
     runs-on: ubuntu-latest
@@ -98,8 +104,8 @@ jobs:
         run: |
           docker load -i ./dockerimages/postgres_appointmentsdb
           docker load -i ./dockerimages/rabbitmq
-          docker load -i ./dockerimages/appointmentservice
-          docker load -i ./dockerimages/clinicservice
+          docker load -i ./dockerimages/appointment-service
+          docker load -i ./dockerimages/clinic-service
           docker load -i ./dockerimages/api-gateway
           docker images
 
@@ -113,8 +119,8 @@ jobs:
           curl 'http://localhost:8080/api/clinic/publish?message=test'
       - name: Validate Docker logs
         run: |
-          docker compose --profile all logs appointmentservice > appointmentservice.txt
-          if grep -q "test" appointmentservice.txt; then
+          docker compose --profile all logs appointment-service > appointment-service.txt
+          if grep -q "test" appointment-service.txt; then
             echo "Log entry containing test message found!"
           else
             echo "Log entry containing test message not found!"
