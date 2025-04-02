@@ -66,7 +66,7 @@ jobs:
             docker compose build
             mkdir dockerimages
             docker save baconagent/appointment-service -o ./dockerimages/appointment-service.tar
-            docker save baconagent/clinic-service -o ./dockerimages/clinicservice.tar
+            docker save baconagent/clinic-service -o ./dockerimages/clinic-service.tar
             docker save baconagent/api-gateway -o ./dockerimages/api-gateway.tar
 
       - name: Upload Docker images as artifact
