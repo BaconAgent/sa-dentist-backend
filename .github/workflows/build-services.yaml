@@ -63,7 +63,7 @@ jobs:
 
       - name: Docker compose build
         run: |
-            docker compose -f dockercompose.yaml up -d
+            docker compose build
             mkdir dockerimages
             docker save appointmentservice -o ./dockerimages/appointmentservice.tar
             docker save clinicservice -o ./dockerimages/clinicservice.tar
