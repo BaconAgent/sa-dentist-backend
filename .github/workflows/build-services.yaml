@@ -65,7 +65,7 @@ jobs:
         run: |
             docker compose build
             mkdir dockerimages
-            docker save appointment-service -o ./dockerimages/appointmentservice.tar
+            docker save appointment-service -o ./dockerimages/appointment-service.tar
             docker save clinic-service -o ./dockerimages/clinicservice.tar
             docker save api-gateway -o ./dockerimages/api-gateway.tar
             docker save postgres_appointmentsdb -o ./dockerimages/postgres_appointmentsdb.tar
