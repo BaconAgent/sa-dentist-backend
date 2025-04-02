@@ -100,9 +100,9 @@ jobs:
 
       - name: Load Docker Images
         run: |
-          docker load -i ./dockerimages/appointment-service
-          docker load -i ./dockerimages/clinic-service
-          docker load -i ./dockerimages/api-gateway
+          docker load -i ./dockerimages/appointment-service.tar
+          docker load -i ./dockerimages/clinic-service.tar
+          docker load -i ./dockerimages/api-gateway.tar
           docker images
 
       - name: Run Docker Containers
