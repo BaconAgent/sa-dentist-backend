@@ -5,13 +5,16 @@ import com.dentists.microservices.clinic_service.dto.ClinicResponse;
 import com.dentists.microservices.clinic_service.publisher.RabbitMQProducer;
 import com.dentists.microservices.clinic_service.service.ClinicService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
+@CrossOrigin
 @RequestMapping("/api/clinic")
 @RequiredArgsConstructor
 public class ClinicController {
@@ -27,6 +30,7 @@ public class ClinicController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ClinicResponse> getAllClinics(){
+        log.info("Get all clinics");
         return clinicService.getAllClinics();
     }
     @DeleteMapping("/{id}")

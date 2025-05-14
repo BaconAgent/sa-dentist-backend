@@ -31,6 +31,7 @@ public class AppointmentService {
         return new Appointment(appointment.getId(),appointment.getPatientId(),appointmentRequest.doctorId(),appointment.getClinicId(),appointment.getSubject(),appointment.getDate());
     }
     public List<Appointment> getAllAppointments(){
+        log.info("Get all appointments");
         return appointmentRepository.findAll()
                 .stream().map(appointment -> new Appointment(appointment.getId(), appointment.getPatientId(), appointment.getDoctorId(), appointment.getClinicId(), appointment.getSubject(),appointment.getDate()))
                 .toList();

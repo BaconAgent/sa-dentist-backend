@@ -4,13 +4,16 @@ import com.dentists.microservices.appointment_service.dto.AppointmentRequest;
 import com.dentists.microservices.appointment_service.model.Appointment;
 import com.dentists.microservices.appointment_service.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
+//@CrossOrigin
 @RequestMapping("/api/appointment")
 @RequiredArgsConstructor
 public class AppointmentController {
@@ -24,6 +27,7 @@ public class AppointmentController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Appointment> getAllAppointments() {
+        log.info("Get all appointments");
         return appointmentService.getAllAppointments();
     }
     //    @GetMapping

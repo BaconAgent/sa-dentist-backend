@@ -10,6 +10,7 @@ import org.springframework.web.servlet.function.ServerResponse;
 
 @Configuration
 public class Routes {
+
     @Bean
     public RouterFunction<ServerResponse> clinicServiceRoute() {
         return GatewayRouterFunctions.route("clinic_service")
@@ -26,7 +27,8 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> userRoute(){
         return GatewayRouterFunctions.route("user_service")
-                .route(RequestPredicates.path("/api/user/**"),HandlerFunctions.http("http://user-service:8082"))
+                .route(RequestPredicates.path("/api/user/**"),HandlerFunctions.http("http://localhost:8082"))
                 .build();
     }
 }
+//"http://user-service:8082"

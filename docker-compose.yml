@@ -30,23 +30,23 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
  
-#   user-service:
-     #image: "baconagent/user-service"
-#     build:
-#       context: ./UserService
-#       dockerfile: Dockerfile
-#     container_name: user-service
-#     networks:
-#       - Asda-network
-#     depends_on:
-#       rabbitmq:
-#         condition: service_healthy
-#     environment:
-#       SPRING_RABBITMQ_HOST: rabbitmq
-#       RABBITMQ_HOST: rabbitmq
-#       RABBITMQ_PORT: 5672
-#     ports:
-#       - "8082:8082"
+  user-service:
+    image: "baconagent/user-service"
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    networks:
+      - Asda-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+    ports:
+      - "8082:8082"
  
   clinic-service:
     image: "baconagent/clinic-service"
