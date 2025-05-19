@@ -1,5 +1,6 @@
 package com.dentists.microservices.clinic_service.publisher;
 
+import com.dentists.dto.ClinicDeletedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -26,5 +27,9 @@ public class RabbitMQProducer {
     public void sendMessage(String message) {
         logger.info(String.format("Message sent -> %s", message));
         rabbitTemplate.convertAndSend(exchange, routingKey, message);
+    }
+    public void sendClinicDeleteEvent(ClinicDeletedEvent event){
+        logger.info(String.format("Clinic deleted event: ", event.getClinicId()));
+        rabbitTemplate.convertAndSend(exchange, routingKey, event);
     }
 }

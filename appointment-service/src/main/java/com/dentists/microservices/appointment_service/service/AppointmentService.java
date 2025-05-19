@@ -4,8 +4,12 @@ import com.dentists.microservices.appointment_service.dto.AppointmentRequest;
 import com.dentists.microservices.appointment_service.entity.AppointmentEntity;
 import com.dentists.microservices.appointment_service.model.Appointment;
 import com.dentists.microservices.appointment_service.repository.AppointmentRepository;
+import com.dentists.dto.ClinicDeletedEvent;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -16,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
-
+    private static final Logger logger= LoggerFactory.getLogger(AppointmentService.class);
     public Appointment createAppointment(AppointmentRequest appointmentRequest){
         Appointment appointment = Appointment.builder()
                 .patientId(appointmentRequest.patientId())
@@ -56,5 +60,10 @@ public class AppointmentService {
         else{
             throw new RuntimeException("Appointment not found");
         }
+    }
+    @Transactional
+    public void deletedClinicEvent(ClinicDeletedEvent event){
+        int deleted=appointmentRepository.deleteByClinicId(event.getClinicId());
+        logger.info("Deleted appointments: "+ deleted);
     }
 }

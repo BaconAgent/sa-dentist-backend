@@ -1,4 +1,4 @@
-package com.dentists.microservices.clinic_service.config;
+package com.dentists.microservices.appointment_service.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -32,12 +32,12 @@ public class RabbitMQConfig {
         return new TopicExchange(exchangeName);
     }
     @Bean
-    public Binding binding() {
-        return BindingBuilder.bind(queue()).to(topicExchange()).with(routingKey);
-    }
-    @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
+    }
+    @Bean
+    public Binding binding() {
+        return BindingBuilder.bind(queue()).to(topicExchange()).with(routingKey);
     }
     @Bean
     public RabbitTemplate rabbitTemplate(
@@ -57,5 +57,4 @@ public class RabbitMQConfig {
         factory.setMessageConverter(converter);
         return factory;
     }
-
 }

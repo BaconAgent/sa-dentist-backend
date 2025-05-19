@@ -21,7 +21,7 @@ public class AppointmentEntity {
     private Long doctorId;
 
     @Column(name = "clinic_id", nullable = false)
-    private Long clinicId;
+    private String clinicId;
 
     @Column(name = "subject", nullable = false, length = 255)
     private String subject;

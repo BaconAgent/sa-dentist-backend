@@ -3,7 +3,9 @@ package com.dentists.microservices.clinic_service.service;
 import com.dentists.microservices.clinic_service.dto.ClinicRequest;
 import com.dentists.microservices.clinic_service.dto.ClinicResponse;
 import com.dentists.microservices.clinic_service.model.Clinic;
+import com.dentists.microservices.clinic_service.publisher.RabbitMQProducer;
 import com.dentists.microservices.clinic_service.repository.ClinicRepository;
+import com.dentists.dto.ClinicDeletedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ClinicService {
 
     private final ClinicRepository clinicRepository;
+    private final RabbitMQProducer producer;
 
     public ClinicResponse createClinic(ClinicRequest clinicRequest) {
         Clinic clinic = Clinic.builder()
@@ -36,6 +39,7 @@ public class ClinicService {
     public void deleteClinicById(String clinicId) {
         if (clinicRepository.existsById(clinicId)) {
             clinicRepository.deleteById(clinicId);
+            producer.sendClinicDeleteEvent(new ClinicDeletedEvent(clinicId));
         } else {
             throw new RuntimeException("Clinic not found");
         }

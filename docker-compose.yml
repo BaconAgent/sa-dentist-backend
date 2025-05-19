@@ -51,8 +51,8 @@ services:
   clinic-service:
     image: "baconagent/clinic-service"
     build:
-      context: ./clinic-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: clinic-service/Dockerfile
     container_name: clinic-service
     networks:
       - Asda-network
@@ -69,8 +69,8 @@ services:
   appointment-service:
     image: "baconagent/appointment-service"
     build:
-      context: ./appointment-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: appointment-service/Dockerfile
     container_name: appointment-service
     networks:
       - Asda-network

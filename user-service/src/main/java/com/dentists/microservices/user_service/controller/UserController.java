@@ -20,17 +20,16 @@ public class UserController {
     @GetMapping("/test")
     public User getUser(@AuthenticationPrincipal Jwt jwt) {
         log.info("getUser");
-        return new User();
-//        String auth0Id = jwt.getSubject();
-//        log.info("auth0Id: {}", auth0Id);
-//        return userService.getUser(auth0Id)
-//                .orElseGet(() -> {
-//                    // Optionally, create a new profile if none exists
-//                    User user = new User();
-//                    user.setAuth0Id(auth0Id);
-//                    // You may choose to fill in additional default values or trigger user onboarding logic
-//                    return userService.saveOrUpdateUser(user);
-//                });
+        String auth0Id = jwt.getSubject();
+        log.info("auth0Id: {}", auth0Id);
+        return userService.getUser(auth0Id)
+                .orElseGet(() -> {
+                    // Optionally, create a new profile if none exists
+                    User user = new User();
+                    user.setAuth0Id(auth0Id);
+                    // You may choose to fill in additional default values or trigger user onboarding logic
+                    return userService.saveOrUpdateUser(user);
+                });
     }
     @PostMapping()
     public User saveOrUpdateUser(@RequestBody User user) {
