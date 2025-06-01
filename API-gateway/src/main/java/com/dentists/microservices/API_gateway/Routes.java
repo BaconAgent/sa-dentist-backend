@@ -14,20 +14,20 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> clinicServiceRoute() {
         return GatewayRouterFunctions.route("clinic_service")
-                .route(RequestPredicates.path("/api/clinic/**"), HandlerFunctions.http("http://clinic-service:8080"))
+                .route(RequestPredicates.path("/api/clinic/**"), HandlerFunctions.http("lb://clinic-service"))
                 .build();
     }
 
     @Bean
     public RouterFunction<ServerResponse> appointmentRoute() {
         return GatewayRouterFunctions.route("appointment_service")
-                .route(RequestPredicates.path("/api/appointment/**"),HandlerFunctions.http("http://appointment-service:8081"))
+                .route(RequestPredicates.path("/api/appointment/**"),HandlerFunctions.http("lb://appointment-service"))
                 .build();
     }
     @Bean
     public RouterFunction<ServerResponse> userRoute(){
         return GatewayRouterFunctions.route("user_service")
-                .route(RequestPredicates.path("/api/user/**"),HandlerFunctions.http("http://user-service:8082"))
+                .route(RequestPredicates.path("/api/user/**"),HandlerFunctions.http("lb://user-service"))
                 .build();
     }
 }
