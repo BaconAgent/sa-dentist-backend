@@ -34,8 +34,6 @@ jobs:
               - 'user-service/**'
             API-gateway:
               - 'API-gateway/**'
-            eureka-server:
-              - 'eureka-server/**'
             common-dto:
               - 'common-dto/**'
 
@@ -64,11 +62,6 @@ jobs:
         working-directory: API-gateway
         run: mvn clean install
 
-      - name: Build Eureka Server
-        if: steps.filter.outputs.eureka-server == 'true'
-        working-directory: eureka-server
-        run: mvn clean install
-
       - name: Docker compose build
         run: |
           docker compose build
@@ -76,7 +69,6 @@ jobs:
           docker save baconagent/appointment-service -o ./dockerimages/appointment-service.tar
           docker save baconagent/clinic-service -o ./dockerimages/clinic-service.tar
           docker save baconagent/api-gateway -o ./dockerimages/api-gateway.tar
-          docker save baconagent/eureka-server -o ./dockerimages/eureka-server.tar
 
       - name: Upload Docker images as artifact
         uses: actions/upload-artifact@v4
@@ -112,11 +104,10 @@ jobs:
           docker load -i ./dockerimages/appointment-service.tar
           docker load -i ./dockerimages/clinic-service.tar
           docker load -i ./dockerimages/api-gateway.tar
-          docker load -i ./dockerimages/eureka-server.tar
           docker images
 
       # Bring up the stack, including observability (assumes these services are in docker-compose.yml)
-      - name: Run Docker Containers (incl. Grafana, Loki, Prometheus, Tempo, Eureka)
+      - name: Run Docker Containers (incl. Grafana, Loki, Prometheus, Tempo)
         run: |
           docker compose up -d
           docker ps
@@ -165,8 +156,6 @@ jobs:
               - 'user-service/**'
             API-gateway:
               - 'API-gateway/**'
-            eureka-server:
-              - 'eureka-server/**'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -208,14 +197,6 @@ jobs:
           context: ./API-gateway
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:latest
-
-      - name: Build and push Eureka Server
-        if: steps.filter.outputs.eureka-server == 'true'
-        uses: docker/build-push-action@v4
-        with:
-          context: ./eureka-server
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/eureka-server:latest
 
   cleanup:
     runs-on: ubuntu-latest

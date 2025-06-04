@@ -29,16 +29,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
- 
-  eureka-server:
-    build:
-      context: ./eureka-server
-      dockerfile: Dockerfile
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-    networks:
-      - Asda-network
   user-service:
     image: "baconagent/user-service"
     build:
@@ -48,15 +38,12 @@ services:
     networks:
       - Asda-network
     depends_on:
-      - eureka-server
-      - rabbitmq
-      # rabbitmq:
-      #   condition: service_healthy
+       rabbitmq:
+         condition: service_healthy
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
-      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
     ports:
       - "8082:8082"
  
@@ -69,15 +56,12 @@ services:
     networks:
       - Asda-network
     depends_on:
-      - eureka-server
-      - rabbitmq
-      # rabbitmq:
-      #   condition: service_healthy
+       rabbitmq:
+         condition: service_healthy
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
-      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
     ports:
       - "8080:8080"
 
@@ -90,15 +74,12 @@ services:
     networks:
       - Asda-network
     depends_on:
-      - eureka-server
-      - rabbitmq
-      # rabbitmq:
-      #   condition: service_healthy
+       rabbitmq:
+         condition: service_healthy
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
-      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
     ports:
       - "8081:8081"
 
@@ -111,12 +92,8 @@ services:
     networks:
       - Asda-network
     depends_on:
-      - eureka-server
-      - rabbitmq
-      # rabbitmq:
-      #   condition: service_healthy
-    environment:
-      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+       rabbitmq:
+         condition: service_healthy
     ports:
       - "9000:9000"
   loki:
