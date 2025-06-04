@@ -104,6 +104,7 @@ jobs:
           docker load -i ./dockerimages/appointment-service.tar
           docker load -i ./dockerimages/clinic-service.tar
           docker load -i ./dockerimages/api-gateway.tar
+          docker load -i ./dockerimages/user-service.tar
           docker images
 
       # Bring up the stack, including observability (assumes these services are in docker-compose.yml)
