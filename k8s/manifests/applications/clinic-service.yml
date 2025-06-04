@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clinic-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clinic-service
+  template:
+    metadata:
+      labels:
+        app: clinic-service
+    spec:
+      containers:
+        - name: clinic-service
+          image: baconagent/clinic-service:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clinic-service
+spec:
+  selector:
+    app: clinic-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
