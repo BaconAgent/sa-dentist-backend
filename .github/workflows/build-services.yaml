@@ -172,7 +172,8 @@ jobs:
         if: steps.filter.outputs.appointment-service == 'true'
         uses: docker/build-push-action@v4
         with:
-          context: ./appointment-service
+          context: .
+          file: ./appointment-service/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/appointment-service:latest
 
@@ -180,7 +181,8 @@ jobs:
         if: steps.filter.outputs.clinic-service == 'true'
         uses: docker/build-push-action@v4
         with:
-          context: ./clinic-service
+          context: .
+          file: ./clinic-service/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/clinic-service:latest
 
@@ -188,7 +190,8 @@ jobs:
         if: steps.filter.outputs.user-service == 'true'
         uses: docker/build-push-action@v4
         with:
-          context: ./user-service
+          context: .
+          file: ./user-service/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/user-service:latest
 
@@ -196,7 +199,8 @@ jobs:
         if: steps.filter.outputs.API-gateway == 'true'
         uses: docker/build-push-action@v4
         with:
-          context: ./API-gateway
+          context: .
+          file: ./API-gateway/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:latest
 
