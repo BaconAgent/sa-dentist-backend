@@ -33,7 +33,7 @@ services:
     image: "baconagent/user-service"
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: user-service/Dockerfile
     container_name: user-service
     networks:
       - Asda-network
@@ -87,7 +87,7 @@ services:
     image: "baconagent/api-gateway"
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: API-gateway/Dockerfile
     container_name: api-gateway
     networks:
       - Asda-network
