@@ -1,7 +1,7 @@
 FROM jelastic/maven:3.9.9-openjdk-23-almalinux-9 AS build
 WORKDIR /app
 COPY . .
-RUN mvn clean package -pl API-gateway -am -DskipTests
+RUN mvn clean package -pl api-gateway -am -DskipTests
 
 FROM openjdk:23
 WORKDIR /app
