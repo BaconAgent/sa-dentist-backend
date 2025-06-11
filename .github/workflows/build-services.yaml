@@ -172,7 +172,7 @@ jobs:
         if: steps.filter.outputs.appointment-service == 'true'
         uses: docker/build-push-action@v4
         with:
-          context: ./appointment-service
+          context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/appointment-service:latest
 
@@ -180,7 +180,7 @@ jobs:
         if: steps.filter.outputs.clinic-service == 'true'
         uses: docker/build-push-action@v4
         with:
-          context: ./clinic-service
+          context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/clinic-service:latest
 
