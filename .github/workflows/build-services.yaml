@@ -209,6 +209,7 @@ jobs:
     needs:
       - build
       - test
+      - deploy
     if: ${{ always() }}
 
     steps:
