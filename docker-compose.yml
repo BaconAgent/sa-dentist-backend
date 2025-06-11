@@ -32,7 +32,7 @@ services:
   user-service:
     image: "baconagent/user-service"
     build:
-      context: ./user-service
+      context: .
       dockerfile: Dockerfile
     container_name: user-service
     networks:
@@ -86,7 +86,7 @@ services:
   api-gateway:
     image: "baconagent/api-gateway"
     build:
-      context: ./API-gateway
+      context: .
       dockerfile: Dockerfile
     container_name: api-gateway
     networks:
