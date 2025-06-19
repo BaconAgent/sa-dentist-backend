@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-gateway
+  name: api-gateway-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api-gateway
+      app: api-gateway-deployment
   template:
     metadata:
       labels:
-        app: api-gateway
+        app: api-gateway-deployment
     spec:
       containers:
         - name: api-gateway
           image: baconagent/api-gateway:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 9000
           resources:
@@ -26,13 +27,24 @@ spec:
               cpu: "500m"
 
 ---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: api-gateway
+#spec:
+#  type: NodePort
+#  selector:
+#    app: api-gateway-deployment
+#  ports:
+#    - port: 80
+#      targetPort: 9000
 apiVersion: v1
 kind: Service
 metadata:
   name: api-gateway
 spec:
   selector:
-    app: api-gateway
+    app: api-gateway-deployment
   ports:
     - protocol: TCP
       port: 9000
@@ -47,7 +59,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: api-gateway
+    name: api-gateway-deployment
   minReplicas: 1
   maxReplicas: 5
   metrics:

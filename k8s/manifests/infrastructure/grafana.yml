@@ -20,10 +20,10 @@ spec:
           resources:
             requests:
               memory: "128Mi"
-              cpu: "100"
+              cpu: "100m"
             limits:
               memory: "256Mi"
-              cpu: "200"
+              cpu: "200m"
 
           env:
             - name: GF_AUTH_ANONYMOUS_ENABLED

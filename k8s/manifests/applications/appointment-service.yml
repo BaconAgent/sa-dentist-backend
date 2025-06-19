@@ -15,6 +15,7 @@ spec:
       containers:
         - name: appointment-service
           image: baconagent/appointment-service:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8081
           resources:
